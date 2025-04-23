@@ -74,3 +74,28 @@ async function DisplayRows() {
     }
 }
 DisplayRows();
+
+async function truncateUsers() {
+    if (!confirm("Are you sure you want to delete ALL users? This action cannot be undone.")) {
+        return;
+    }
+
+    try {
+        const response = await fetch("/api/users/truncate", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" }
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert(result.message || "Users table truncated.");
+            DisplayRows(); // refresh the table
+        } else {
+            alert(result.error || "Failed to truncate users table.");
+        }
+    } catch (error) {
+        console.error("Error truncating users table:", error);
+        alert("An error occurred.");
+    }
+}
