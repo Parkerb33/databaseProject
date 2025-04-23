@@ -1,0 +1,86 @@
+
+body{
+    font-family: cursive;
+    background-color:rgb(3, 37, 59);
+    padding: 5%;
+    background-image: linear-gradient(to right bottom,rgba(255, 233, 253, 0.978), rgb(194, 228, 241), rgb(195, 124, 11));
+}
+h1{
+    background-image: linear-gradient(to right bottom,rgb(8, 117, 117), rgb(8, 101, 134));
+    border-radius: 10%;
+    border-style: solid;
+    border-color: black;
+    text-align: center;
+    color: rgb(225, 236, 239);
+    font-family: cursive;
+    
+}
+h3{
+    color: rgb(0, 0, 0);
+    text-decoration:underline;
+    font-family: cursive;
+}
+p{
+    border-style: solid;
+    border-radius: 5%;
+    background-color: rgb(226, 239, 249);
+}
+h3.Schedule{
+    text-decoration: underline;
+    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+img{
+    border: 2px solid black;
+    border-radius: 10%;
+    height: 20%;
+    width: 20%;
+}
+table.MyDay, th, td{
+    width: 40%;
+    margin-left: auto;
+    margin-right: auto;
+    border: 2px solid black;
+    border-collapse: collapse;
+}
+p.pic{
+    background-color: transparent;
+    border-style: hidden;
+    text-align: center;
+}
+
+@media only screen and (max-width: 600px){
+    body{
+        background-color: lightblue;
+    }
+}
+
+tr:nth-child(odd){
+    background-color: rgb(165, 160, 160);
+}
+tr:nth-child(even){
+    background-color: aliceblue;
+}
+
+#logo{
+    border-radius: 10%;
+    border-style: solid;
+    border-color: black;
+}
+#login{
+    font-family: cursive;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+    text-align: center;
+    width: 60%;
+    margin: 0 auto;
+}
+ 
+#menubar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 35px;
+    background-color: white;
+    border-bottom: 1px solid #ccc;
+    font-family: Arial, sans-serif;
+}

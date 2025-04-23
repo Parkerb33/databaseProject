@@ -1,0 +1,92 @@
+/* author: Parker Brown*/ 
+body {
+    background-color: aliceblue;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: large;
+}
+h3 {
+    color: rgb(27, 55, 107);
+    text-align: center;
+    font-size: 2.5em;
+}
+table {
+    width: 90%;
+    /* margin: 20px; */
+    margin: auto;
+    text-align: center;
+}
+td {
+    padding: 10px;
+    border: 1px;
+}
+th{
+    padding: 5px;
+    background-color: black;
+    color: white;
+}
+tr:nth-child(odd){
+    background-color: white;
+    color: black;
+}
+tr:nth-child(even){
+    background-color: black;
+    color: white;
+}
+h2, h4 {
+    text-align: center;
+}
+h1 {
+    font-size: 40px;
+    text-align: center;
+}
+.center {
+    display: block;
+    margin: auto;
+    width: 25%;
+    height: auto;
+}
+#Info {
+    margin: 20px;
+    text-align: center;
+    background-color: rgb(207, 216, 224);
+}
+.end-text {
+    background-color: rgb(207, 216, 224);
+    font-size: large;
+    text-align: center;
+}
+@media screen and (max-width: 768px) {
+    body {
+        font-size: medium;
+    }
+    .center {
+        width: 50%;
+    }
+    table {
+        font-size: small;
+    }
+}
+
+#logo{
+    border-radius: 10%;
+    border-style: solid;
+    border-color: black;
+}
+#login{
+    font-family: cursive;
+    background-color: white;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 1);
+    text-align: center;
+    width: 60%;
+    margin: 0 auto;
+}
+ 
+#menubar{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 35px;
+    background-color: white;
+    border-bottom: 1px solid #ccc;
+    font-family: Arial, sans-serif;
+}

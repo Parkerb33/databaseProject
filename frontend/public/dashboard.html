@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script defer src="dashboard.js"></script>
+    <script src="loginStatus.js"> </script>
+    <script src = "myOwnFunctions.js"></script>
+    <link href="/CadetPlace.css" type="text/css" rel = "stylesheet">
+
+</head>
+<body>
+    <div id="menubar">
+        <div class="left-bar">
+          <img src="images/Logo.jpg" alt="Cadet Marketplace Logo" id="logo" width="115">
+          <p id="user-status">Checking login status...</p>
+        </div>
+      
+        <nav id="links">
+          <a href="index.html">Index Page</a> |
+          <a href="dashboard.html">Admin Dashboard</a> |
+          <a href="frontpage.html">Return to Frontpage</a>
+        </nav>
+    </div>
+
+    <h2>Admin Dashboard</h2>
+    <H4> Users Table</H4>
+    <div id = "admin">
+        <form id="admin-form" onsubmit="addUser(event)">
+            <fieldset>
+            <h5>Add User</h5>
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="username" required>
+            <br>
+    
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <br>
+    
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <br>
+    
+            <label for="role">Role:</label>
+            <select id="role" name="role" required>
+                <option value="user">User</option>
+                <option value="admin">Admin</option>
+            </select>
+            <br>
+    
+            <button type="submit">Register</button>
+            </fieldset>
+        </form>
+    </div>
+
+    <div id = "admin">
+        <h5> Show Rows: </h5>
+        <input type="number" id = "rowCount"/>
+        <button onclick="DisplayRows()"> Display </button>
+    </div>
+    <div id = "admin">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                </tr>
+            </thead>
+            <tbody id="userList"></tbody>
+        </table>
+    </div>
+
+    <h4>Listings Table</h4>
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Item</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Seller-Id</th>
+
+            </tr>
+        </thead>
+        <tbody id="userList"></tbody>
+    </table>
+</body>
+</html>
+

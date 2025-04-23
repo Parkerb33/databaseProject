@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register</title>
+    <script defer src="register.js"> </script>
+    <script src="loginStatus.js"> </script>
+    <link href="/CadetPlace.css" type="text/css" rel = "stylesheet">
+</head>
+<body>
+  <div id="menubar">
+    <div class="left-bar">
+      <img src="images/Logo.jpg" alt="Cadet Marketplace Logo" id="logo" width="115">
+      <p id="user-status">Checking login status...</p>
+    </div>
+  
+    <nav id="links">
+      <a href="index.html">Index Page</a> |
+      <a href="dashboard.html">Admin Dashboard</a> |
+      <a href="frontpage.html">Return to Frontpage</a>
+    </nav>
+    
+</div>
+    <form id="register-form" onsubmit="register(event)">
+      <fieldset>
+      <legend>R Form</legend>
+        <label for="name">Name:</label>
+        <input type="text" id="name" name="username" required>
+        <br>
+
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+        <br>
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password" required>
+        <br>
+
+        <label for="role">Role:</label>
+        <select id="role" name="role" required>
+            <option value="user">User</option>
+            <option value="admin">Admin</option>
+        </select>
+        <br>
+
+        <button type="submit">Register</button>
+      </fieldset>
+    </form>
+    <hr>
+    <a href="index.html">return to index page</a>
+</body>
+</html>
+

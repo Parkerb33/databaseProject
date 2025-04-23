@@ -1,0 +1,43 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: L27_nginx_server
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+      - ./frontend/public:/usr/share/nginx/html:ro
+      
+    depends_on:
+      - backend
+    networks:
+      - mynetwork
+
+  backend:
+    build: ./backend
+    container_name: L27_express_backend
+    env_file:
+      - .env  # Load environment variables
+    volumes:
+      - ./backend:/app
+    depends_on:
+      - db
+    networks:
+      - mynetwork
+
+  db:
+    image: postgres:latest
+    container_name: L27_postgres_db
+    env_file:
+      - .env  # load same environment variables
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - mynetwork
+
+volumes:
+  pgdata:
+
+networks:
+  mynetwork:

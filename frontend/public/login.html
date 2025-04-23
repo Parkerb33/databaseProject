@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link href="/CadetPlace.css" type="text/css" rel = "stylesheet">
+    <script defer src = "login.js"> </script>
+
+</head>
+<body>
+  <div id="menubar">
+    <div class="left-bar">
+      <img src="images/Logo.jpg" alt="Cadet Marketplace Logo" id="logo" width="115">
+      <p id="user-status">Checking login status...</p>
+    </div>
+  
+    <nav id="links">
+      <a href="index.html">Index Page</a> |
+      <a href="dashboard.html">Admin Dashboard</a> |
+      <a href="frontpage.html">Return to Frontpage</a>
+    </nav>
+</div>
+
+
+    <h1>Login</h1>
+    <form id="login-form" onsubmit="login(event)">
+      <fieldset>
+        <label for="user_field">Username:</label>
+        <input type="text" id="user_field" name="username" required>
+        <br>
+        <label for="password_field">Password:</label>
+        <input type="password" id="password_field" name="password" required>
+        <br>
+        <button type="submit">Login</button>
+      </fieldset>
+    </form>
+
+    <hr>
+
+    <a href="frontpage.html"> return to frontpage</a>
+</body>
+</html>
+
