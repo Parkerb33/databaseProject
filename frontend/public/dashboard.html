@@ -8,7 +8,7 @@
     <script src="loginStatus.js"> </script>
     <script src = "myOwnFunctions.js"></script>
     <link href="/CadetPlace.css" type="text/css" rel = "stylesheet">
-
+ 
 </head>
 <body>
     <div id="menubar">
@@ -16,13 +16,14 @@
           <img src="images/Logo.jpg" alt="Cadet Marketplace Logo" id="logo" width="115">
           <p id="user-status">Checking login status...</p>
         </div>
-      
+     
         <nav id="links">
           <a href="index.html">Index Page</a> |
+          <a href="dashboard.html">Admin Dashboard</a> |
           <a href="frontpage.html">Return to Frontpage</a>
         </nav>
     </div>
-
+ 
     <h2>Admin Dashboard</h2>
     <H4> Users Table</H4>
     <div id = "admin">
@@ -32,32 +33,39 @@
             <label for="name">Name:</label>
             <input type="text" id="name" name="username" required>
             <br>
-    
+   
             <label for="email">Email:</label>
             <input type="email" id="email" name="email" required>
             <br>
-    
+   
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
             <br>
-    
+   
             <label for="role">Role:</label>
             <select id="role" name="role" required>
                 <option value="user">User</option>
                 <option value="admin">Admin</option>
             </select>
             <br>
-    
+   
             <button type="submit">Register</button>
             </fieldset>
         </form>
     </div>
 
+    <div id="admin">
+        <h5> Delete All Users: </h5>
+        <button onclick="truncateUsers()">Truncate Users Table</button>
+    </div>
+ 
     <div id = "admin">
         <h5> Show Rows: </h5>
         <input type="number" id = "rowCount"/>
         <button onclick="DisplayRows()"> Display </button>
     </div>
+ 
+ 
     <div id = "admin">
         <table border="1">
             <thead>
@@ -70,23 +78,59 @@
             <tbody id="userList"></tbody>
         </table>
     </div>
-    <div id="admin">
-        <h5> Delete All Users: </h5>
-        <button onclick="truncateUsers()">Truncate Users Table</button>
-    </div>
+ 
     <h4>Listings Table</h4>
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Item</th>
-                <th>Category</th>
-                <th>Price</th>
-                <th>Seller-Id</th>
-
-            </tr>
-        </thead>
-        <tbody id="userList"></tbody>
-    </table>
+ 
+    <div id = "admin">
+        <form id="admin-form-listing" onsubmit="addListing(event)">
+            <fieldset>
+            <h5>Add Listing</h5>
+            <label for="username">Item:</label>
+            <input type="text" name="username" required>
+            <br>
+   
+            <label for="email">Email:</label>
+            <input type="email" name="email" required>
+            <br>
+   
+            <label for="category">Category:</label>
+            <select name="category" id="category" required>
+                <option value="" disabled selected>Select a category</option>
+                <option value="Books">Books</option>
+                <option value="Uniforms">Uniforms</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Car">Car</option>
+                <option value="Other">Other</option>
+              </select>
+            <br>
+ 
+            <label for="price">price:</label>
+            <input type="number" name="price">
+            <br>
+            <button type="submit">Register</button>
+            </fieldset>
+        </form>
+    </div>
+ 
+    <div id = "admin">
+        <h5> Show Rows: </h5>
+        <input type="number" id = "rowCountlisting"/>
+        <button onclick="DisplayRowsListings()"> Display </button>
+    </div>
+ 
+    <div id = "admin">
+        <table border="1">
+            <thead>
+                <tr>
+                    <th>Item</th>
+                    <th>Email</th>
+                    <th>Price</th>
+                </tr>
+            </thead>
+            <tbody id="form-listing"></tbody>
+        </table>
+    </div>  
 </body>
 </html>
-
+ 
+ 

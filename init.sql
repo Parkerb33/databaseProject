@@ -1,14 +1,20 @@
 -- taking the easy way: use the default database: postgres
 CREATE TABLE IF NOT EXISTS users (
     id SERIAL PRIMARY KEY,
-    username VARCHAR(100) UNIQUE NOT NULL,
+    username VARCHAR(100) NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
     hash CHAR(128) NOT NULL,
     salt CHAR(32) NOT NULL,
     role VARCHAR(10) CHECK (role IN ('user', 'admin')) NOT NULL DEFAULT 'user'
 );
 
-select * from users;
+CREATE TABLE IF NOT EXISTS listings (
+    id SERIAL PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    category VARCHAR(255),
+    price INT
+);
 
 -- -- ALL LISTINGS TABLE
 -- CREATE TABLE IF NOT EXISTS listings (
