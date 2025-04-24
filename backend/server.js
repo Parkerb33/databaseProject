@@ -109,5 +109,15 @@ app.post("/listings", async (req, res) => {
     console.log(error);
   }
 });
+
+app.delete("/listings/truncate", async (req, res) => {
+  try {
+      await pool.query("TRUNCATE TABLE listings RESTART IDENTITY CASCADE");
+      res.json({ message: "Listings table has been truncated." });
+  } catch (err) {
+      console.error(err);
+      res.status(500).json({ error: "Failed to truncate listings table." });
+  }
+});
  
 app.listen(3000, () => console.log("Server running on port 3000"));

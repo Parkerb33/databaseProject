@@ -198,3 +198,28 @@ async function truncateUsers() {
         alert("An error occurred.");
     }
 }
+
+async function truncateListings() {
+    if (!confirm("Are you sure you want to delete ALL listings? This action cannot be undone.")) {
+        return;
+    }
+
+    try {
+        const response = await fetch("/api/listings/truncate", {
+            method: "DELETE",
+            headers: { "Content-Type": "application/json" }
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert(result.message || "Listings table truncated.");
+            fetchListing(); // refresh the listings table
+        } else {
+            alert(result.error || "Failed to truncate listings table.");
+        }
+    } catch (error) {
+        console.error("Error truncating listings table:", error);
+        alert("An error occurred.");
+    }
+}

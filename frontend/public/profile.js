@@ -6,10 +6,9 @@ async function checkProfileStatus() {
         const userProfile = document.getElementById("user-profile");
 
         if (data.loggedIn) {
-            
             // userStatus.innerHTML = `Logged in as: <strong>${data.user.username}</strong> (<a href="/api/logout">Logout</a>)`;
             userProfile.innerHTML = `<table border="1">
-                    <tr><th>Username</th><th>Email</th><th>Role</th><td></tr>
+                    <tr><th>Username</th><th>Email</th><th>Role</th></tr>
                     <tr><td>${data.user.username}</td><td>${data.user.email}</td><td>${data.user.role}</td></tr>
                 </table>
                 <p><a href="logout.html">Logout</a></p>
@@ -22,4 +21,5 @@ async function checkProfileStatus() {
     }
 }
 
-window.onload = checkProfileStatus;
+// window.onload = checkProfileStatus;
+window.addEventListener("DOMContentLoaded", checkLoginStatus);

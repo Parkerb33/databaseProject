@@ -53,18 +53,12 @@
             </fieldset>
         </form>
     </div>
-
-    <div id="admin">
-        <h5> Delete All Users: </h5>
-        <button onclick="truncateUsers()">Truncate Users Table</button>
-    </div>
  
     <div id = "admin">
         <h5> Show Rows: </h5>
         <input type="number" id = "rowCount"/>
         <button onclick="DisplayRows()"> Display </button>
     </div>
- 
  
     <div id = "admin">
         <table border="1">
@@ -78,9 +72,13 @@
             <tbody id="userList"></tbody>
         </table>
     </div>
+
+    <div id="admin">
+        <h5> Delete All Users: </h5>
+        <button onclick="truncateUsers()">Truncate Users Table</button>
+    </div>
  
     <h4>Listings Table</h4>
- 
     <div id = "admin">
         <form id="admin-form-listing" onsubmit="addListing(event)">
             <fieldset>
@@ -129,7 +127,12 @@
             </thead>
             <tbody id="form-listing"></tbody>
         </table>
-    </div>  
+    </div> 
+    
+    <div id="admin">
+        <h5> Delete All Listings: </h5>
+        <button onclick="truncateListings()">Truncate Listings Table</button>
+    </div>
 </body>
 </html>
  
