@@ -138,7 +138,7 @@ async function fetchListing() {
         // for each user in result, create table row and append to table in DOM
         users.forEach(user => {  
             const row = document.createElement("tr");
-            row.innerHTML = `<td>${user.username}</td><td>${user.email}</td><td>${user.price}</td>`;
+            row.innerHTML = `<td>${user.username}</td><td>${user.email}</td><td>${user.price}</td><td>${user.category}</td>`;
             userTable.appendChild(row);
         });
  
@@ -221,5 +221,79 @@ async function truncateListings() {
     } catch (error) {
         console.error("Error truncating listings table:", error);
         alert("An error occurred.");
+    }
+}
+
+async function createTable(event) {
+    event.preventDefault();
+
+    const tableName = document.getElementById("tableName").value;
+    const tableSchema = document.getElementById("tableSchema").value;
+
+    try {
+        const response = await fetch("/api/create-table", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ tableName, tableSchema }),
+            credentials: "include"
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert(result.message);
+        } else {
+            alert(result.error || "Table creation failed.");
+        }
+    } catch (error) {
+        console.error("Error creating table:", error);
+        alert("Something went wrong.");
+    }
+}
+
+async function loadTables() {
+    try {
+        const response = await fetch("/api/admin/tables", {
+            credentials: "include"
+        });
+        const tables = await response.json();
+
+        const tableList = document.getElementById("table-list");
+        tableList.innerHTML = "";
+
+        tables.forEach(name => {
+            const li = document.createElement("li");
+            li.textContent = name;
+            li.innerHTML = `${name} <button onclick="dropTable('${name}')">Drop</button>`;
+            tableList.appendChild(li);
+        });
+    } catch (error) {
+        console.error("Error fetching tables:", error);
+        alert("Could not load tables.");
+    }
+}
+
+async function dropTable(name) {
+    if (!confirm(`Are you sure you want to drop the table '${name}'? This cannot be undone.`)) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/admin/tables/${name}`, {
+            method: "DELETE",
+            credentials: "include"
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert(result.message);
+            loadTables(); // Refresh the list
+        } else {
+            alert(result.error || "Failed to drop table.");
+        }
+    } catch (error) {
+        console.error("Error dropping table:", error);
+        alert("Something went wrong.");
     }
 }

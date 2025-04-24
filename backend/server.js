@@ -120,4 +120,59 @@ app.delete("/listings/truncate", async (req, res) => {
   }
 });
  
+app.post("/create-table", async (req, res) => {
+  const { tableName, tableSchema } = req.body;
+
+  if (!tableName || !tableSchema) {
+      return res.status(400).json({ error: "Table name and schema are required." });
+  }
+
+  // Sanitize table name to prevent SQL injection
+  if (!/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(tableName)) {
+      return res.status(400).json({ error: "Invalid table name." });
+  }
+
+  const query = `CREATE TABLE IF NOT EXISTS ${tableName} (${tableSchema})`;
+
+  try {
+      await pool.query(query);
+      res.json({ message: `Table '${tableName}' created successfully.` });
+  } catch (err) {
+      console.error("Error creating table:", err);
+      res.status(500).json({ error: "Failed to create table." });
+  }
+});
+
+app.get("/admin/tables", async (req, res) => {
+  try {
+      const result = await pool.query(`
+          SELECT tablename
+          FROM pg_catalog.pg_tables
+          WHERE schemaname = 'public'
+      `);
+      const tables = result.rows.map(row => row.tablename);
+      res.json(tables);
+  } catch (err) {
+      console.error("Error fetching tables:", err);
+      res.status(500).json({ error: "Failed to fetch tables." });
+  }
+});
+
+app.delete("/admin/tables/:name", async (req, res) => {
+  const { name } = req.params;
+
+  // Sanitize table name to prevent SQL injection
+  if (!/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(name)) {
+      return res.status(400).json({ error: "Invalid table name." });
+  }
+
+  try {
+      await pool.query(`DROP TABLE IF EXISTS ${name} CASCADE`);
+      res.json({ message: `Table '${name}' has been dropped.` });
+  } catch (err) {
+      console.error("Error dropping table:", err);
+      res.status(500).json({ error: "Failed to drop table." });
+  }
+});
+
 app.listen(3000, () => console.log("Server running on port 3000"));

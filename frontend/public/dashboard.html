@@ -105,7 +105,7 @@
             <label for="price">price:</label>
             <input type="number" name="price">
             <br>
-            <button type="submit">Register</button>
+            <button type="submit">List</button>
             </fieldset>
         </form>
     </div>
@@ -123,6 +123,7 @@
                     <th>Item</th>
                     <th>Email</th>
                     <th>Price</th>
+                    <th>Category</th>
                 </tr>
             </thead>
             <tbody id="form-listing"></tbody>
@@ -133,6 +134,27 @@
         <h5> Delete All Listings: </h5>
         <button onclick="truncateListings()">Truncate Listings Table</button>
     </div>
+
+    <div id="admin">
+        <h4>Create a New Table</h4>
+        <form id="create-table-form" onsubmit="createTable(event)">
+          <label for="tableName">Table Name:</label>
+          <input type="text" id="tableName" required>
+          <br>
+      
+          <label for="tableSchema">Schema (e.g., id SERIAL PRIMARY KEY, name TEXT):</label>
+          <input type="text" id="tableSchema" required>
+          <br>
+      
+          <button type="submit">Create Table</button>
+        </form>
+      </div>
+
+      <div id="admin">
+        <h4>Existing Tables</h4>
+        <button onclick="loadTables()">Refresh Table List</button>
+        <ul id="table-list"></ul>
+      </div>
 </body>
 </html>
  
