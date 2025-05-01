@@ -167,6 +167,18 @@ button:hover, .profile_buttons:hover{
     margin-top: 20px;
 }
 
+#instructions-header{
+    background-color: white;
+    padding: 30px 40px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 20px;
+}
+
+
 #images {
     display: flex;
     justify-content: center;
@@ -186,35 +198,37 @@ button:hover, .profile_buttons:hover{
     border-radius: 6px;
 }
 
-.listings {
+.listing-row {
     display: flex;
-    flex-wrap: wrap;
-    /* Allows wrapping */
-    justify-content: center;
-    /* Or use space-evenly/space-between */
+    align-items: flex-start;
     gap: 20px;
-    /* Spacing between items */
-    padding: 20px;
-}
-
-.listing-container-link {
-    text-decoration: none;
-    color: inherit;
-    display: block;
-}
-
-.listing-container {
-    background-color: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
-    width: 200px;
-    /* smaller container */
-    text-align: center;
-    transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
-
-.listing-container:hover {
-    transform: scale(1.03);
-    box-shadow: 0 0 20px rgba(0, 0, 0, 0.15);
-}
+    padding: 16px 0;
+    border-bottom: 1px solid #ddd;
+    max-width: 900px;
+    margin: auto;
+  }
+  
+  .listing-row img {
+    width: 120px;
+    height: auto;
+    object-fit: cover;
+    border-radius: 8px;
+  }
+  
+  .listing-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  
+  .listing-info h3 {
+    font-size: 1.1rem;
+    margin: 0;
+  }
+  
+  .listing-info p {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #333;
+  }

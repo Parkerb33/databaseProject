@@ -84,8 +84,11 @@ async function addListing(event) {
     const userData = {
         username: formData.get("username"),
         email: formData.get("email"),
+        phone: formData.get("phone"),
         category: formData.get("category"),
-        price: formData.get("price")
+        price: formData.get("price"),
+        desci: formData.get("desci"),
+        picture: formData.get("picture")
     };
  
     const jsonBody = JSON.stringify(userData);
@@ -297,3 +300,92 @@ async function dropTable(name) {
         alert("Something went wrong.");
     }
 }
+
+async function addListingSell(event) {
+    console.log("here we are in register.js");
+    event.preventDefault(); // Prevent default form submission
+ 
+    const formData = new FormData(document.getElementById("admin-form-listing"));
+ 
+    const userData = {
+        username: formData.get("username"),
+        email: formData.get("email"),
+        phone: formData.get("phone"),
+        category: formData.get("category"),
+        price: formData.get("price"),
+        desci: formData.get("desci"),
+        picture: formData.get("picture")
+    };
+ 
+    const jsonBody = JSON.stringify(userData);
+ 
+    try {
+        const response = await fetch("/api/listings", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: jsonBody // JSON.stringify(userData)
+        });
+ 
+        const result = await response.json();
+ 
+        if (response.ok) {
+            // Show success alert and redirect to frontpage.html
+            console.log("Registration OK:");
+            console.log(result);
+            if(result.success == true){
+               alert(`${result.message} for ${result.username}`);
+               window.location.href = "sell.html";
+            } else {
+               alert(`${result.message}`);
+            }
+        } else {
+            // Show error alert if registration fails
+            console.log("response not OK");
+            console.log(result);
+            console.log("Failed to register:", response.statusText);
+            alert(result.error || "Registration failed. Please try again." || `for User: ${result.name}`);
+        }
+ 
+    } catch (error) {
+        console.error("... error in registration");
+        console.error("Error during registration:", error);
+        console.error(`jsonBody: ${jsonBody}`);
+        // alert("An error occurred. Please try again.");
+        alert(`Error: ${error.message}`); //chat debugging
+    }
+}
+
+window.addEventListener("DOMContentLoaded", async () => {
+    try {
+      const response = await fetch("/api/listings");
+      const listings = await response.json();
+  
+      if (!Array.isArray(listings) || listings.length === 0) {
+        document.getElementById("instructions").innerText = "No listings found.";
+        return;
+      }
+  
+      let html = "";
+  
+      listings.forEach(item => {
+        html += `
+          <div class="listing-row">
+            <img src="images/textbooks.jpg" alt="item image">
+            <div class="listing-info">
+              <h3>${item.username}</h3>
+              <p><strong>Category:</strong> ${item.category}</p>
+              <p><strong>Price:</strong> $${item.price}</p>
+              <p><strong>Seller:</strong> ${item.email}</p>
+              <p><strong>Description:</strong> ${item.desci}</p>
+            </div>
+          </div>
+        `;
+      });
+  
+      document.getElementById("instructions").innerHTML = html;
+  
+    } catch (error) {
+      console.error("Error loading listings:", error);
+      document.getElementById("instructions").innerText = "Error loading listings.";
+    }
+  });

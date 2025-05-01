@@ -12,8 +12,11 @@ CREATE TABLE IF NOT EXISTS listings (
     id SERIAL PRIMARY KEY,
     username VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL,
+    phone VARCHAR(255) NULL, 
     category VARCHAR(255),
-    price INT
+    price INT, 
+    desci VARCHAR(255) NULL, 
+    picture VARCHAR(255) NULL
 );
 
 -- -- ALL LISTINGS TABLE

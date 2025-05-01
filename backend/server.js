@@ -85,17 +85,20 @@ app.get("/listings", auth.ensureAdmin, async (req, res) => {
 app.post("/listings", async (req, res) => {
  
   console.log("server.js: listings ");
-  const { username, email, category, price } = req.body;
+  const { username, email, phone, category, price, desci, picture } = req.body;
  
   console.log(`server.js: listings username: ${username}`);
   console.log(`server.js: listings email: ${email}`);
+  console.log(`server.js: listings phone: ${phone}`);
   console.log(`server.js: listings categiry: ${category}`);
   console.log(`server.js: listings price: ${price}`);
+  console.log(`server.js: listings desci: ${desci}`);
+  console.log(`server.js: listings picture: ${picture}`);
  
  
-  const query = 'INSERT INTO listings (username, email, category, price) VALUES ($1, $2, $3, $4)';
- 
-  const values = [username, email, category, price];
+  const query = `INSERT INTO listings (username, email, phone, category, price, desci, picture) VALUES ($1, $2, $3, $4, $5, $6, $7)`;
+
+  const values = [username, email, phone, category, price, desci, picture];
   console.log("trying query with these values...");
   console.log(values);
  

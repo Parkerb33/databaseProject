@@ -7,6 +7,7 @@
     <title>Sell | Cadet Marketplace</title>
     <script src="loginStatus.js"> </script>
     <link rel="stylesheet" href="CadetPlace.css">
+    <script src = "myOwnFunctions.js"></script>
 </head>
 
 <body>
@@ -25,12 +26,46 @@
 
     <div id="sign_in">
         <h2>Sell</h2>
-        <form action="/login" method="POST">
-            <input type="text" name="itemName" placeholder="Item Title" required />
-            <input type="number" name="Price" placeholder="Price" required />
-            <input type="number" name="Quantity" placeholder="Quantity" required />
-            <input type="text" name="description" placeholder="Short Description" required />
-            <button type="submit">Create New Listing</button>
+        <form id="admin-form-listing" onsubmit="addListingSell(event)">
+            <fieldset>
+            <h5>Add Listing</h5>
+            <label for="username">Item:</label>
+            <input type="text" name="username" required>
+            <br>
+   
+            <label for="email">Email:</label>
+            <input type="email" name="email" required>
+            <br>
+
+            <label for="phone">Phone number:</label>
+            <input type="text" name="phone" required>
+            <br>
+   
+            <label for="category">Category:</label>
+            <select name="category" id="category" required>
+                <option value="" disabled selected>Select a category</option>
+                <option value="Books">Books</option>
+                <option value="Uniforms">Uniforms</option>
+                <option value="Electronics">Electronics</option>
+                <option value="Car">Car</option>
+                <option value="Other">Other</option>
+              </select>
+            <br>
+ 
+            <label for="price">price:</label>
+            <input type="number" name="price">
+            <br>
+
+            <label for="desci">Description:</label>
+            <input type="text" name="desci">
+
+            <label for="picture">picture:</label>
+            <input type="text" name="picture">
+            <br>
+            <br>
+
+            <button type="submit">List</button>
+            </fieldset>
         </form>
     </div>
 </body>
