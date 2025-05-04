@@ -32,12 +32,22 @@
     <div id="instructions-header">
         <h2>Browse Listings</h2>
         <div id="links">
-            <p>Filter by  
-            <a href="Listings/Cars.html">Cars</a> |
-            <a href="Listings/TextBooks.html">TextBooks</a> |
-            <a href="Listings/Uniforms.html">Uniforms</a> |
-            <a href ="Listings/Other.html"> Other</a> </p>
+            <p>Filter by
+            <a href="#" onclick="filterByCategory('Books'); return false;">TextBooks</a> |
+            <a href="#" onclick="filterByCategory('Uniforms')">Uniforms</a> |
+            <a href="#" onclick="filterByCategory('Electronics'); return false;">Electronics</a> |
+            <a href="#" onclick="filterByCategory('Car'); return false;">Car </a> |
+            <a href="#" onclick="filterByCategory('Other'); return false;">Other</a> |
+            <a href="#" onclick="filterByCategory(''); return false;">Show All Listings</a> 
+            </p>
         </div>
+        <div id="links">
+            <p>Sort by
+                <a href="#" onclick="sortListings('low'); return false;">Lowest Price</a> | 
+                <a href="#" onclick="sortListings('high'); return false;">Highest Price</a>
+            </p>
+        </div>
+
         <form action="/search" method="GET">
             <input type="search" name="q" placeholder="Search..." />
             <button type="submit">Search</button>

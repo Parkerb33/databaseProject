@@ -53,14 +53,6 @@ app.post("/register", async (req, res) => {
   }
 });
  
-app.post("/login", auth.login);
- 
-app.get("/users", auth.ensureAdmin, async (req, res) => {
-  console.log("in GET /users");
-  const result = await pool.query("SELECT username, email, role FROM users");
-  console.log(`GET /users rows: ${result.rows}`);
-  res.json(result.rows);
-});
  
 app.get("/logout", (req, res) => {
   req.session.destroy();
@@ -75,11 +67,30 @@ app.get("/session", (req, res) => {
     }
 });
  
-app.get("/listings", auth.ensureAdmin, async (req, res) => {
-  console.log("in GET /listings");
-  const result = await pool.query("SELECT username, email, category, price FROM listings");
-  console.log(`GET /listings rows: ${result.rows}`);
-  res.json(result.rows);
+app.get("/listings", async (req, res) => {
+  const { category, sort } = req.query;
+
+  let query = "SELECT username, email, category, price, desci FROM listings";
+  const values = [];
+
+  if (category) {
+    query += " WHERE LOWER(category) = LOWER($1)";
+    values.push(category);
+  }
+
+  if (sort === "low") {
+    query += " ORDER BY price ASC";
+  } else if (sort === "high") {
+    query += " ORDER BY price DESC";
+  }
+
+  try {
+    const result = await pool.query(query, values);
+    res.json(result.rows);
+  } catch (err) {
+    console.error("DB error in /api/listings:", err);
+    res.status(500).send("Internal Server Error");
+  }
 });
  
 app.post("/listings", async (req, res) => {
@@ -146,6 +157,38 @@ app.post("/create-table", async (req, res) => {
   }
 });
 
+app.post("/create-bookmark", async (req, res) => {
+  const { tableName} = req.body;
+
+  if (!tableName) {
+      return res.status(400).json({ error: "Table name required." });
+  }
+
+  // Sanitize table name to prevent SQL injection
+  if (!/^[a-zA-Z_][a-zA-Z0-9_]*$/.test(tableName)) {
+      return res.status(400).json({ error: "Invalid table name." });
+  }
+
+  // Define your static table schema
+  const tableSchema = `
+    id SERIAL PRIMARY KEY,
+    bookname VARCHAR(100) NOT NULL,
+    username VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    listing_id INT NOT NULL
+  `;
+
+  const query = `CREATE TABLE IF NOT EXISTS ${tableName} (${tableSchema})`;
+
+  try {
+      await pool.query(query);
+      res.json({ message: `Table '${tableName}' created successfully.` });
+  } catch (err) {
+      console.error("Error creating table:", err);
+      res.status(500).json({ error: "Failed to create table." });
+  }
+});
+
 app.get("/admin/tables", async (req, res) => {
   try {
       const result = await pool.query(`
@@ -177,5 +220,32 @@ app.delete("/admin/tables/:name", async (req, res) => {
       res.status(500).json({ error: "Failed to drop table." });
   }
 });
+
+app.post("/login", auth.login);
+ 
+app.get("/users", auth.ensureAdmin, async (req, res) => {
+  console.log("in GET /users");
+  const result = await pool.query("SELECT username, email, role FROM users");
+  console.log(`GET /users rows: ${result.rows}`);
+  res.json(result.rows);
+});
+
+app.get("/my-listings", async (req, res) => {
+  if (!req.session.user) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  const userEmail = req.session.user.username; // assuming you store username (not email) in session
+
+  try {
+    const query = "SELECT username, email, price, category FROM listings WHERE username = $1";
+    const result = await pool.query(query, [userEmail]);
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching user listings:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 
 app.listen(3000, () => console.log("Server running on port 3000"));

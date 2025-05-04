@@ -1,3 +1,7 @@
+
+let currentCategory = ""; 
+
+
 async function addUser(event) {
     console.log("here we are in register.js");
     event.preventDefault(); // Prevent default form submission
@@ -150,7 +154,9 @@ async function fetchListing() {
         window.location.href = "/frontpage.html";
     }
 }
-fetchListing();
+if (!window.location.pathname.endsWith("bookmark.html")) {
+    fetchListing();
+}
  
 async function DisplayRowsListings() {
     const response = await fetch("/api/listings", { credentials: "include" });
@@ -355,6 +361,33 @@ async function addListingSell(event) {
     }
 }
 
+async function createBookmark(event) {
+    event.preventDefault();
+
+    const tableName = document.getElementById("tableName").value;
+    // const tableSchema = document.getElementById("tableSchema").value;
+
+    try {
+        const response = await fetch("/api/create-bookmark", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ tableName }),
+            credentials: "include"
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert(result.message);
+        } else {
+            alert(result.error || "Table creation failed.");
+        }
+    } catch (error) {
+        console.error("Error creating table:", error);
+        alert("Something went wrong.");
+    }
+}
+
 window.addEventListener("DOMContentLoaded", async () => {
     try {
       const response = await fetch("/api/listings");
@@ -389,3 +422,89 @@ window.addEventListener("DOMContentLoaded", async () => {
       document.getElementById("instructions").innerText = "Error loading listings.";
     }
   });
+
+  async function filterByCategory(category) {
+    console.log("CATEGORY CLICKED:", category || "All");
+    currentCategory = category;  // save current filter
+  
+    try {
+      const url = category ? `/api/listings?category=${category}` : `/api/listings`;
+      const res = await fetch(url);
+      const data = await res.json();
+      updateListingsDOM(data);
+    } catch (err) {
+      console.error("Failed to fetch listings:", err);
+    }
+  }
+
+  window.filterByCategory = filterByCategory;
+
+function updateListingsDOM(listings) {
+  const container = document.getElementById("instructions");
+  if (!container) {
+    console.error("No container element with ID 'instructions' found.");
+    return;
+  }
+
+  if (!Array.isArray(listings) || listings.length === 0) {
+    container.innerHTML = "<p>No matching listings found.</p>";
+    return;
+  }
+
+  let html = "";
+  listings.forEach(item => {
+    html += `
+      <div class="listing-row">
+        <img src="images/textbooks.jpg" alt="item image">
+        <div class="listing-info">
+          <h3>${item.username}</h3>
+          <p><strong>Category:</strong> ${item.category}</p>
+          <p><strong>Price:</strong> $${item.price}</p>
+          <p><strong>Seller:</strong> ${item.email}</p>
+          <p><strong>Description:</strong> ${item.desci}</p>
+        </div>
+      </div>
+    `;
+  });
+
+  container.innerHTML = html;
+}
+
+async function sortListings(order) {
+    console.log("SORTING:", order, "for category:", currentCategory || "All");
+  
+    let url = `/api/listings?sort=${order}`;
+    if (currentCategory) {
+      url += `&category=${currentCategory}`;
+    }
+  
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+      updateListingsDOM(data);
+    } catch (err) {
+      console.error("Error fetching sorted listings:", err);
+    }
+  }
+  
+  async function loadMyListings() { //for mylistings bookmark
+    try {
+        const response = await fetch("/api/my-listings", { credentials: "include" });
+        const listings = await response.json();
+
+        const tableBody = document.getElementById("form-listing");
+        tableBody.innerHTML = "";
+
+        listings.forEach(item => {
+            const row = document.createElement("tr");
+            row.innerHTML = `<td>${item.username}</td><td>${item.email}</td><td>${item.price}</td><td>${item.category}</td>`;
+            tableBody.appendChild(row);
+        });
+
+    } catch (error) {
+        console.error("Error loading user listings:", error);
+    }
+}
+if (window.location.pathname.endsWith("bookmark.html")) {
+    window.addEventListener("DOMContentLoaded", loadMyListings);
+}

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <script defer src="dashboard.js"></script>
+    <script src="loginStatus.js"> </script>
+    <script src = "myOwnFunctions.js"></script>
+    <!-- <link href="/CadetPlace.css" type="text/css" rel = "stylesheet"> -->
+    <link rel="stylesheet" href="CadetPlace.css">
+ 
+</head>
+<body>
+    <div id="menubar">
+        <div class="left-bar">
+          <img src="images/Logo.jpg" alt="Cadet Marketplace Logo" id="logo" width="115">
+          <p id="user-status">Checking login status...</p>
+        </div>
+     
+        <nav id="links">
+          <a href="dashboard.html">Admin Dashboard</a> |
+          <a href="frontpage.html">Return to Frontpage</a>
+        </nav>
+    </div>
+ 
+    <h2>Bookmarks</h2>
+    <div id = "admin">
+      <h3>Your Listings</h3>
+      <table border="1">
+          <thead>
+              <tr>
+                  <th>Item</th>
+                  <th>Email</th>
+                  <th>Price</th>
+                  <th>Category</th>
+                  <!-- <th>Delete</th> -->
+              </tr>
+          </thead>
+          <tbody id="form-listing"></tbody>
+      </table>
+  </div> 
+
+  <div id="admin">
+    <h2>Sell</h2>
+    <p>Create more listings, earn some money!</p>
+        <h4><a href="sell.html" class="profile_buttons"> Start Selling </a></h4>
+</div>
+
+    <div id="admin">
+      <h4>Create a New Bookmark</h4>
+      <form id="create-table-form" onsubmit="createTable(event)">
+        <label for="tableName">Bookmark Name:</label>
+        <input type="text" id="tableName" required>
+        <br>
+        <button type="submit">Create Bookmark</button>
+      </form>
+  </div>
+
+      <div id="admin">
+        <h4>Existing Tables</h4>
+        <button onclick="loadTables()">Refresh Table List</button>
+        <ul id="table-list"></ul>
+      </div>
+</body>
+</html>
