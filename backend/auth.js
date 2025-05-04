@@ -13,8 +13,14 @@ async function login(req, res) {
   const hash = crypto.pbkdf2Sync(password, user.salt, 1000, 64, "sha512").toString("hex");
   if (hash !== user.hash) return res.status(401).json({ message: "Login fAilure"});
 
-  console.log(`making session: ${user.username}, ${user.role}`);
-  req.session.user = { username: user.username, role: user.role };
+  console.log(`making session:  ${user.id}, ${user.username}, ${user.email}, ${user.role}`);
+  req.session.user = {
+    id: user.id,
+    username: user.username,
+    email: user.email,
+    role: user.role
+  };
+  
   res.json({ message: "Logged in" });
 }
 
