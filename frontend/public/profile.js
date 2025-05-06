@@ -23,3 +23,4 @@ async function checkProfileStatus() {
 
 // window.onload = checkProfileStatus;
 window.addEventListener("DOMContentLoaded", checkLoginStatus);
+

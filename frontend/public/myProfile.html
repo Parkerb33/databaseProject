@@ -7,25 +7,46 @@
     <title>View Profile | Cadet Marketplace</title>
     <script src="loginStatus.js"> </script>
     <script src="profile.js"> </script>
+    <script src = "myProfile.js"></script>
     <link rel="stylesheet" href="CadetPlace.css">
 </head>
 
 <body>
     <div id="menubar">
         <div class="left-bar">
-            <img src="images/Logo.jpg" alt="Cadet Marketplace Logo" id="logo" width="115">
-            <p id="user-status">Checking login status...</p>
+          <img src="images/Logo.jpg" alt="Cadet Marketplace Logo" id="logo" width="115">
+          <p id="user-status">Checking login status...</p>
         </div>
-        
+      
         <nav id="links">
-            <a href="dashboard.html">Admin Dashboard</a> |
-            <a href="frontpage.html">Return to Frontpage</a>
+            <a href="dashboard.html" id="admin-link" style="display:none;">Admin Dashboard </a> 
+            <a href="frontpage.html"> Return to frontpage</a> 
         </nav>
     </div>
 
     <div id = "sign_in">
         <h2>Your Profile</h2>
         <p id="user-profile">Checking login status...</p>
+        <button id="update-profile-button">Update Profile</button>
+
+        <!-- Form for Updating Profile (Initially Hidden) -->
+        <form id="update-form" style="display:none;">
+            <h4>IMPORTANT!!! ALL FEILDS NEED VALUE!!!</h4>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <br>
+
+            <label for="password">New Password (optional):</label>
+            <input type="password" id="password" name="password">
+            <br>
+
+            <button type="submit">Update Profile</button>
+        </form>
+    </div>
     </div>
 
     <div id = "instructions">

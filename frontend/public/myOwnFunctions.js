@@ -55,6 +55,7 @@ async function addUser(event) {
  
 async function DisplayRows() {
     const response = await fetch("/api/users", { credentials: "include" });
+    console.log("Cookies:", document.cookie);
     const users = await response.json();
  
     if (response.ok) {
@@ -73,7 +74,7 @@ async function DisplayRows() {
         });
  
     } else {
-        alert("Unauthorized access! - remove this alert from dashboard.js (line:18) when 'done'"); // comment this out when confident
+        alert("Unauthorized access! - remove this alert from dashboard.js line 76 when 'done'"); // comment this out when confident
         window.location.href = "/frontpage.html";
     }
 }
@@ -154,6 +155,7 @@ async function fetchListing() {
         window.location.href = "/frontpage.html";
     }
 }
+
 if (!window.location.pathname.endsWith("bookmark.html")) {
     fetchListing();
 }
@@ -307,6 +309,73 @@ async function dropTable(name) {
     }
 }
 
+async function createBookmark(event) {
+    event.preventDefault();
+
+    const tableName = document.getElementById("tableName").value;
+    // const tableSchema = document.getElementById("tableSchema").value;
+
+    try {
+        const response = await fetch("/api/create-bookmark", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ tableName }),
+            credentials: "include"
+        });
+
+        const result = await response.json();
+
+        if (response.ok) {
+            alert(result.message);
+        } else {
+            alert(result.error || "Table creation failed.");
+        }
+    } catch (error) {
+        console.error("Error creating table:", error);
+        alert("Something went wrong.");
+    }
+}
+  
+  async function loadMyListings() { //for mylistings bookmark
+    try {
+        const response = await fetch("/api/my-listings", { credentials: "include" });
+        const listings = await response.json();
+
+        const tableBody = document.getElementById("form-listing");
+        tableBody.innerHTML = "";
+
+        listings.forEach(item => {
+            const row = document.createElement("tr");
+            row.innerHTML = `<td>${item.username}</td><td>${item.email}</td><td>${item.price}</td><td>${item.category}</td>`;
+            tableBody.appendChild(row);
+        });
+
+    } catch (error) {
+        console.error("Error loading user listings:", error);
+    }
+}
+if (window.location.pathname.endsWith("bookmark.html")) {
+    window.addEventListener("DOMContentLoaded", loadMyListings);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// implemented in a diffrent JS file now 
 async function addListingSell(event) {
     console.log("here we are in register.js");
     event.preventDefault(); // Prevent default form submission
@@ -358,33 +427,6 @@ async function addListingSell(event) {
         console.error(`jsonBody: ${jsonBody}`);
         // alert("An error occurred. Please try again.");
         alert(`Error: ${error.message}`); //chat debugging
-    }
-}
-
-async function createBookmark(event) {
-    event.preventDefault();
-
-    const tableName = document.getElementById("tableName").value;
-    // const tableSchema = document.getElementById("tableSchema").value;
-
-    try {
-        const response = await fetch("/api/create-bookmark", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ tableName }),
-            credentials: "include"
-        });
-
-        const result = await response.json();
-
-        if (response.ok) {
-            alert(result.message);
-        } else {
-            alert(result.error || "Table creation failed.");
-        }
-    } catch (error) {
-        console.error("Error creating table:", error);
-        alert("Something went wrong.");
     }
 }
 
@@ -487,24 +529,3 @@ async function sortListings(order) {
     }
   }
   
-  async function loadMyListings() { //for mylistings bookmark
-    try {
-        const response = await fetch("/api/my-listings", { credentials: "include" });
-        const listings = await response.json();
-
-        const tableBody = document.getElementById("form-listing");
-        tableBody.innerHTML = "";
-
-        listings.forEach(item => {
-            const row = document.createElement("tr");
-            row.innerHTML = `<td>${item.username}</td><td>${item.email}</td><td>${item.price}</td><td>${item.category}</td>`;
-            tableBody.appendChild(row);
-        });
-
-    } catch (error) {
-        console.error("Error loading user listings:", error);
-    }
-}
-if (window.location.pathname.endsWith("bookmark.html")) {
-    window.addEventListener("DOMContentLoaded", loadMyListings);
-}
