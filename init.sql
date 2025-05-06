@@ -48,12 +48,11 @@ INSERT INTO listings (username, email, phone, category, price, desci, picture) V
 ('Smartwatch', 'admin1@gmail.com', '555-0002', 'Electronics', 85, 'Fitness tracker with heart monitor', 'watch.jpg'),
 ('Air Purifier', 'admin1@gmail.com', '555-0002', 'Appliances', 70, 'HEPA filter purifier, for small rooms', 'purifier.jpg');
 
-
-
-
 CREATE TABLE textbook_listings AS
     SELECT * FROM listings
     WHERE category = 'Books';
+
+
     
 -- -- ALL LISTINGS TABLE
 -- CREATE TABLE IF NOT EXISTS listings (
